@@ -93,8 +93,10 @@ class UArmGUI extends JFrame {
   val mouse = new MouseAdapter() {
 
     val speed = 5
+    val minDelay = 50
     var x = 0
     var y = 0
+    var time = System.currentTimeMillis();
 
     override def mousePressed(e: MouseEvent) {
       if (e.getButton() == MouseEvent.BUTTON1) {
@@ -116,13 +118,15 @@ class UArmGUI extends JFrame {
 
     override def mouseDragged(e: MouseEvent) {
         val mask = InputEvent.BUTTON1_DOWN_MASK;
-        if ((e.getModifiersEx() & mask) == mask) {
+        val t = System.currentTimeMillis();
+        if ((e.getModifiersEx() & mask) == mask && t - time >= minDelay) {
           val x2 = e.getX()
           val y2 = e.getY()
           val dx = (x2 - x) / speed
           val dy = (y2 - y) / speed
           if(dx != 0) x = x2
           if(dy != 0) y = y2
+          time = t
           try {
             arm.map(_.move(dx, dy, 0, 0))
             status.setText("move: x = " + dx + ", y = " + dy)

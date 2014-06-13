@@ -10,7 +10,11 @@ and height.  Here, we go all the way to Cartesian coordinates.  (0,0,0) is the
 position of the arm after initialization by the driver.  The unit should
 (hopefully) be millimeters.
 
-ToDo: does not yet work as expected, need to look into the uArm controller to really understand what rotation, stretch, and height are ...
+# ToDo
+
+* does not yet work quite as expected, need to look into the uArm controller to really understand how they convert to angle
+* beside jSSC, maybe we can use Netty (might be easier to have a full-duplex communication with the Arduino)
+
 
 ## Compiling and running
 

@@ -75,6 +75,7 @@ class UArm( port: String,
       case None =>        0: Byte //nothing
     }
 
+    //TODO this could by simplified using a ByteBuffer with LITTLE_ENDIAN
     Array[Byte](
         -1: Byte, -86: Byte, // 0xff: Byte, 0xaa: Byte,
         upper(b01), lower(b01),
