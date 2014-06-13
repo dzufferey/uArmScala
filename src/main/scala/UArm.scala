@@ -21,14 +21,14 @@ class UArm( port: String,
   private var r = 0 //hand rotation
   private var g = false
 
-  //boundaries
+  //boundaries (taken from the mouse control application by UFactory)
   final private val rotationMax =   90
   final private val rotationMin =  -90
   final private val  stretchMax =  210
   final private val  stretchMin =    0
   final private val   heightMax =  150
   final private val   heightMin = -180
-  final private val     offsetX =   60
+  final private val     offsetX =   55
 
   def initialize() {
     if (!opened) {
@@ -98,7 +98,7 @@ class UArm( port: String,
     //(0,0,0) is actually (offsetX, 0, 0) away from the center of rotation.
     val x2 = x + offsetX
     val rotation = toDegrees(atan2(y, x2)).toInt
-    val stretch = round(sqrt(x2*x2 + y*y + z*z)).toInt - offsetX
+    val stretch = round(sqrt(x2*x2 + y*y)).toInt - offsetX //strech does nor include height
     setPosition(stretch, z, rotation, r, grip)
   }
   
