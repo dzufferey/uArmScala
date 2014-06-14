@@ -45,7 +45,7 @@ class UArm( port: String,
     }
   }
 
-  def resetState {
+  def reset {
     x = 0
     y = 0
     z = 0
@@ -86,10 +86,14 @@ class UArm( port: String,
       )
   }
 
-  /** The uArm command */
-  private def setPosition(stretch: Int, height: Int, rotation: Int, handRot: Int, grip: Option[Boolean]) {
+  /** The uArm command.
+   *  It is not recommended to use setPosition and move. (moveTo is OK.)
+   */
+  def setPosition(stretch: Int, height: Int, rotation: Int, handRot: Int, grip: Option[Boolean]) {
     if (opened) {
       val bytes = makeByteSeq(stretch, height, rotation, handRot, grip)
+      //println("stretch = " + stretch + ", height = " + height + ", rotation = " + rotation)
+      //println("command = " + org.apache.commons.codec.binary.Hex.encodeHexString(bytes))
       serialPort.writeBytes(bytes)
     }
   }

@@ -32,6 +32,9 @@ Maintain the left mouse button pressed to move the arm in the horizontal plan.
 Use the mouse wheel to raise/lower the arm.
 Use the right mouse button grip/release objects.
 
+Depending on your OS Linux/Windows/Mac you need to change the default USB port (used for the tests).
+It is located in UArm.scala, the file contains instructions.
+
 
 ## Acknowledgements
 
