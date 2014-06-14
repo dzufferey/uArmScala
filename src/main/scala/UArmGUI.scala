@@ -96,6 +96,7 @@ class UArmGUI extends JFrame {
     val minDelay = 50
     var x = 0
     var y = 0
+    var dz = 0
     var time = System.currentTimeMillis();
 
     override def mousePressed(e: MouseEvent) {
@@ -116,20 +117,28 @@ class UArmGUI extends JFrame {
       }
     }
 
+    private def checkDelay = {
+      val t = System.currentTimeMillis();
+      var res = t - time >= minDelay
+      if (res) {
+        time = t
+      }
+      res
+    }
+
     override def mouseDragged(e: MouseEvent) {
         val mask = InputEvent.BUTTON1_DOWN_MASK;
-        val t = System.currentTimeMillis();
-        if ((e.getModifiersEx() & mask) == mask && t - time >= minDelay) {
+        if ((e.getModifiersEx() & mask) == mask && checkDelay) {
           val x2 = e.getX()
           val y2 = e.getY()
           val dx = (x2 - x) / speed
           val dy = (y2 - y) / speed
           if(dx != 0) x = x2
           if(dy != 0) y = y2
-          time = t
           try {
-            arm.map(_.move(dx, dy, 0, 0))
-            status.setText("move: x = " + dx + ", y = " + dy)
+            arm.map(_.move(dx, dy, dz, 0))
+            dz = 0
+            status.setText("move: x = " + dx + ", y = " + dy + ", z = " + dz)
           } catch {
             case err: Exception =>
               status.setText(err.getMessage())
@@ -138,13 +147,16 @@ class UArmGUI extends JFrame {
     }
 
     override def mouseWheelMoved(e: MouseWheelEvent) {
-      val notches = -1 * e.getWheelRotation()
-      try {
-        arm.map(_.move(0,0,notches,0))
-        status.setText("move: z = " + notches)
-      } catch {
-        case err: Exception =>
-          status.setText(err.getMessage())
+      dz = dz - e.getWheelRotation()
+      if (checkDelay) {
+        try {
+          arm.map(_.move(0,0,dz,0))
+          status.setText("move: z = " + dz)
+          dz = 0
+        } catch {
+          case err: Exception =>
+            status.setText(err.getMessage())
+        }
       }
     }
   }

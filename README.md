@@ -10,8 +10,10 @@ and height.  Here, we go all the way to Cartesian coordinates.  (0,0,0) is the
 position of the arm after initialization by the driver.  The unit should
 (hopefully) be millimeters.
 
-# ToDo
+## ToDo
 
+* rotation of the hand
+* add possibility ot move the arm with the keyboard
 * beside jSSC, maybe we can use Netty (might be easier to have a full-duplex communication with the Arduino)
 * own remote control application to access more of the uarm functionalities
 
