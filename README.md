@@ -1,6 +1,6 @@
 # Interface to control the uArm robotic arm by UFactory written in Scala
 
-The code assumes that the [RemoteControl application](https://github.com/UFactory/UF_uArm) (tested with beta 3) is running on the Arduino.
+The code assumes that the [RemoteControl application](https://github.com/UFactory/UF_uArm) (tested with beta 3 and 4) is running on the Arduino.
 
 Instead of exposing the remote control interface in a Scala API, the goal is to
 expose a "reverse kinematics" API.  The user just set the position (x,y,z) and
@@ -12,8 +12,8 @@ position of the arm after initialization by the driver.  The unit should
 
 # ToDo
 
-* does not yet work quite as expected, need to look into the uArm controller to really understand how they convert to angle
 * beside jSSC, maybe we can use Netty (might be easier to have a full-duplex communication with the Arduino)
+* own remote control application to access more of the uarm functionalities
 
 
 ## Compiling and running
